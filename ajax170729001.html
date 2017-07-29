@@ -1,1 +1,32 @@
-<h1>TEST</h1>
+<script>
+    var xmlhttp = false;
+    if(window.XMLHttpRequest){
+        xmlhttp = new XMLHttpRequest();
+    }else if(window.ActiveXObject){
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    if(!xmlhttp){
+        alert("No AJAX Support!!!")
+    }else{
+        alert("AJAX Support!!!")
+    }
+
+    function test() {
+        if(!xmlhttp) return;
+
+        xmlhttp.open("GET", "test.txt", true);
+        xmlhttp.onreadystatechange = callback;
+        xmlhttp.send;
+    }
+
+    function callback() {
+        console.log("OK");
+    }
+
+
+
+</script>
+
+<input type="button" onclick="test()" value="CLICK">
+<div id="test"></div>
