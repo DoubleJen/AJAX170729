@@ -1,4 +1,3 @@
-
 <?php
     //php變數大小寫嚴格區分
     $req = $_SERVER;

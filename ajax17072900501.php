@@ -1,4 +1,3 @@
-
 <?php
     include 'array2xml.php';
 $input = array('product' => array(

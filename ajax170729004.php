@@ -1,4 +1,3 @@
-
 <?
 $data1 = rand(1,49);
 $data2 = rand(1,39);
