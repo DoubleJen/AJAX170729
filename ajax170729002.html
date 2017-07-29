@@ -1,0 +1,29 @@
+<script>
+    var xmlhttp = false;
+    if(window.XMLHttpRequest){
+        xmlhttp = new XMLHttpRequest();
+    }else if(window.ActiveXObject) {
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    function cal() {
+        var x = document.getElementById('x').value;
+        var y = document.getElementById('y').value;
+
+        xmlhttp.open("GET", "ajax170729003.php?x=" + x + "&y=" + y, true);
+        xmlhttp.onreadystatechange = function () {
+            if(xmlhttp.readyState ==4 && xmlhttp.status == 200){
+            document.getElementById('result').innerHTML =
+                xmlhttp.responseText;
+            }
+        };
+        xmlhttp.send();
+    }
+
+</script>
+
+<input type="text" id="x" />
++
+<input type="text" id="y" />
+<input type="button" onclick="cal()" value="=" />
+<span id="result"></span>

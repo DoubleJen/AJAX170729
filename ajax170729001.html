@@ -5,6 +5,8 @@
     }else if(window.ActiveXObject){
         xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
     }
+    console.log(xmlhttp.readyState);
+    xmlhttp.onreadystatechange = callback;
 
     if(!xmlhttp){
         alert("No AJAX Support!!!")
@@ -15,13 +17,20 @@
     function test() {
         if(!xmlhttp) return;
 
-        xmlhttp.open("GET", "test.txt", true);
-        xmlhttp.onreadystatechange = callback;
-        xmlhttp.send;
+        xmlhttp.open("GET", "test.php", true);
+        xmlhttp.setRequestHeader("User_Agent", "BRAD");
+        xmlhttp.send();
     }
 
     function callback() {
-        console.log("OK");
+        console.log(xmlhttp.readyState);
+        var target = document.getElementById("state" +xmlhttp.readyState);
+        target.innerHTML = xmlhttp.readyState;
+
+        if(xmlhttp.readyState == 4 && xmlhttp.status == 200 ){
+            document.getElementById("test").innerHTML =
+                xmlhttp.responseText;
+        }
     }
 
 
@@ -29,4 +38,10 @@
 </script>
 
 <input type="button" onclick="test()" value="CLICK">
+<div id="state0"></div>
+<div id="state1"></div>
+<div id="state2"></div>
+<div id="state3"></div>
+<div id="state4"></div>
+
 <div id="test"></div>
