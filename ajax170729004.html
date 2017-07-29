@@ -1,0 +1,105 @@
+<script>
+    var xmlhttp = false;
+    if(window.XMLHttpRequest){
+        xmlhttp = new XMLHttpRequest();
+    }else if(window.ActiveXObject) {
+        xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+    }
+
+    function test() {
+        var table = document.getElementById("table");
+
+        //table的屬性 by forEach
+        for(var v in table){
+            console.log(v + " = " + table[v]);
+        }
+        console.log("==================================");
+
+        var cc = table.children;
+        for(var vv in cc){
+            console.log(vv + " = " + cc[vv]);
+        }
+     }
+
+    function addRow(){
+        var counter = document.getElementById("counter");
+        var table= document.getElementById("table");
+
+        //https://www.w3schools.com/jsref/coll_table_rows.asp
+        counter.innerHTML = table.rows.length;
+
+        // /https://www.w3schools.com/jsref/met_table_insertrow.asp
+        var tr = table.insertRow(-1);
+
+        //https://www.w3schools.com/jsref/met_tablerow_insertcell.asp
+        var td0 = tr.insertCell(0);
+        var td1 = tr.insertCell(1);
+        var td2 = tr.insertCell(2);
+        td0.innerHTML="data1";
+        td1.innerHTML="data2";
+        td2.innerHTML="data3";
+    }
+    
+    function addRowV2() {
+        xmlhttp.open("GET", "ajax170729004.php", "true");
+        xmlhttp.onreadystatechange = function () {
+            if(xmlhttp.readyState == 4 && xmlhttp.status == 200){
+                //https://www.w3schools.com/jsref/jsref_trim_string.asp
+                var resp = xmlhttp.responseText.trim();
+
+                //https://www.w3schools.com/jsref/jsref_split.asp
+                var data = resp.split(",");
+
+                var table= document.getElementById("table");
+                counter.innerHTML = table.rows.length;
+                var tr = table.insertRow(-1);
+                var td0 = tr.insertCell(0);
+                var td1 = tr.insertCell(1);
+                var td2 = tr.insertCell(2);
+                td0.innerHTML=data[0];
+                td1.innerHTML=data[1];
+                td2.innerHTML=data[2];
+
+                if(data[0] < 10){
+                    td0.bgColor = "pink";
+                }
+
+            }
+        }
+        xmlhttp.send();
+    }
+
+    function addRowV3() {
+        ////https://www.w3schools.com/xml/default.asp
+        xmlhttp.open("GET", "ajax17072900401.php", "true");
+        xmlhttp.onreadystatechange = function () {
+            if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+                //console.log(xmlhttp.responseText);
+                //console.log("================================");
+
+                var xml = xmlhttp.responseXML;
+                //console.log(typeof (xmlhttp.responseXML));
+                var to = xml.getElementsByTagName("to");
+                //console.log(typeof (to));
+                console.log(to[0].innerHTML);
+                console.log(to[1].innerHTML);
+                console.log(to[2].innerHTML);
+
+            }
+        }
+        xmlhttp.send();
+    }
+
+</script>
+
+<input type="button" onclick="test()" value="test"/>
+<input type="button" onclick="addRowV3()" value="+"/>
+<span id="counter">0</span>
+<table border="1" width="100%" id="table">
+    <tr>
+        <th>No.</th>
+        <th>Name</th>
+        <th>Tel.</th>
+    </tr>
+
+</table>
