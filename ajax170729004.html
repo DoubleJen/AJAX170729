@@ -74,19 +74,49 @@
         xmlhttp.open("GET", "ajax17072900401.php", "true");
         xmlhttp.onreadystatechange = function () {
             if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-                //console.log(xmlhttp.responseText);
-                //console.log("================================");
-
+                var table = document.getElementById("table");
                 var xml = xmlhttp.responseXML;
-                //console.log(typeof (xmlhttp.responseXML));
-                var to = xml.getElementsByTagName("to");
-                //console.log(typeof (to));
-                console.log(to[0].innerHTML);
-                console.log(to[1].innerHTML);
-                console.log(to[2].innerHTML);
+                var notes = xml.getElementsByTagName('note');
+                console.log(notes.length);
+                for (var i = 0; i < notes.length; i++) {
+                    var note = notes[i];
+                    var titleObj = note.getElementsByTagName('title');
+                    var title = titleObj[0].innerHTML;
+
+                    var priceObj = note.getElementsByTagName('price');
+                    var price = priceObj[0].innerHTML;
+
+                    var authorsObj = note.getElementsByTagName('authors');
+                    var authors = authorsObj[0];
+                    var names = authors.getElementsByTagName('name');
+
+                    //處理table(via name)
+                    for (var j = 0; j < names.length; j++) {
+                        var nameObj = names[j];
+                        console.log(nameObj.innerHTML);
+
+                        var tr = table.insertRow(-1);
+                        if (j == 0) {
+                            var td0 = tr.insertCell(0);
+                            td0.rowSpan = names.length;
+                            td0.innerHTML = title;
+
+                            var td1 = tr.insertCell(1);
+                            td1.innerHTML = nameObj.innerHTML;
+
+                            var td2 = tr.insertCell(2);
+                            td2.rowSpan = names.length;
+                            td2.innerHTML = price;
+                        } else {
+                            var td1 = tr.insertCell(0);
+                            td1.innerHTML = nameObj.innerHTML;
+                        }
+                    }
+                }
+
 
             }
-        }
+        };
         xmlhttp.send();
     }
 
@@ -101,5 +131,35 @@
         <th>Name</th>
         <th>Tel.</th>
     </tr>
+
+</table>
+<hr />
+<table border="1" width="100%">
+    <tr>
+        <th>No.</th>
+        <th>Name</th>
+        <th>Tel.</th>
+    </tr>
+    <tr>
+        <td rowspan="2">Note1</td>
+        <td>brad1</td>
+        <td rowspan="2">100</td>
+    </tr>
+    <tr>
+        <td>brad2</td>
+    </tr>
+
+    <tr>
+        <td rowspan="3">Note3</td>
+        <td>brad3</td>
+        <td rowspan="3">200</td>
+    </tr>
+    <tr>
+        <td>brad4</td>
+    </tr>
+    <tr>
+        <td>brad5</td>
+    </tr>
+
 
 </table>
