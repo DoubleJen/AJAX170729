@@ -2,7 +2,7 @@
     //php變數大小寫嚴格區分
     $req = $_SERVER;
 //    foreach($req as $key => $value){
-//        echo "${key} = ${value}<br />";
+//        echo "{$key} = {$value}<br />";
 //    }
 
     $agent = $_SERVER['HTTP_USER_AGENT'];
