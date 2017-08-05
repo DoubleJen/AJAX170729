@@ -1,0 +1,67 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<form action="register170805001.php" onsubmit="return ckForm();">
+	Account: <input type="text" name="account" onblur="ckAccountV2()" id="account" /><span id="mesg"></span><br>
+	Password: <input type="password" name="passwd" id="passwd" /><br>
+	Realname: <input type="text" name="realname" /><br>
+	<input type="submit" value="REGISTER"/>
+</form>
+
+<script>
+	var isOk = false;
+	function ckAccount(){
+		console.log('ckAccount Here');
+		var accountVal = $("#account").val();
+		var params = {account: accountVal};
+		$.get("ckAccount170805001.php", params, function(data){
+				var jsonObj = JSON.parse(data);
+				
+				if(jsonObj.result != null && jsonObj.result ==0){
+					console.log("Account Usable");
+					$("#mesg").html('Account Usable 帳號可用');
+					isOk=true;
+				}else{
+					console.log("Repeat Account");
+					$("#mesg").html('<font color="red">Repeat Account 帳號重覆');
+					isOK=false;
+				}
+			}
+		);
+		
+	}
+	
+	function ckAccountV2(){
+		console.log('ckAccounV2t Here');
+		var accountVal = $("#account").val();
+		var params = {account: accountVal};
+		$.ajax({
+			url: "ckAccount170805001.php",
+			data: params,
+			//async
+			//A Boolean value indicating whether the request should be handled asynchronous or not. Default is true
+			//https://www.w3schools.com/jquery/ajax_ajax.asp
+			async: false,
+			success: function(result,status,xhr){
+				var jsonObj = JSON.parse(result);
+				
+				if(jsonObj.result != null && jsonObj.result ==0){
+					console.log("Account Usable");
+					$("#mesg").html('Account Usable 帳號可用');
+					isOk=true;
+				}else{
+					console.log("Repeat Account");
+					$("#mesg").html('<font color="red">Repeat Account 帳號重覆');
+					isOK=false;
+				}
+			}
+		});
+	}
+	
+	function ckForm(){
+		console.log("before ckForm");
+		ckAccountV2();
+		console.log("after ckForm");
+		console.log("isOk = " + isOK);
+		return false;
+	}
+</script>

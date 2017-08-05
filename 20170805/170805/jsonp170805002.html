@@ -1,0 +1,43 @@
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+<script>
+	function test1(){
+		$.ajax({
+			type: "get",
+			async: true,
+			url: "http://10.21.200.72:5987/170805/jsonp170805002.php",
+			//dataType
+			//The data type expected of the server response.
+			//https://www.w3schools.com/jquery/ajax_ajax.asp
+			dataType: "jsonp",
+			//jsonp
+			//A string overriding the callback function in a jsonp request
+			//https://www.w3schools.com/jquery/ajax_ajax.asp			
+			jsonp: "mycallback",
+			//jsonpCallback
+			//Specifies a name for the callback function in a jsonp request
+			//https://www.w3schools.com/jquery/ajax_ajax.asp
+			jsonpCallback: "myfunc",
+			success: function(data){
+				console.log(data.mesg);
+				console.log(data.name);
+				$("#here").html(data.name);
+			},
+			error: function(){
+				alert('ERROR');
+			}
+			
+		});
+	}
+	
+	function myfunc(){
+		console.log('got it');
+	}
+	
+	
+	//setInterval(test1, 1000);
+	
+</script>
+
+<button onclick="test1()">TEST1</button>
+<div id="here"></div>
